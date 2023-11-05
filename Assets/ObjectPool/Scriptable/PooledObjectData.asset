@@ -12,6 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e1b449644a51af44bc5542363dad100, type: 3}
   m_Name: PooledObjectData
   m_EditorClassIdentifier: 
-  DefaultSize: 0
-  PooledObjectPrefab: {fileID: 0}
-  Parent: {fileID: 0}
+  size: 20
+  pooledObjectPrefab: {fileID: 4712707214067585540, guid: 1566d4cd42e23a24289d3dc384ceb552, type: 3}
+  poolParent: {fileID: 0}
+  shouldDestroyWithLerp: 1
+  SizeToDestroy: 5
+  AutoDestroyPoolDelay: 1
+  DelayBeforePossiblePoolIncrease: 5
+  AfterDestroyDelay: 0.2

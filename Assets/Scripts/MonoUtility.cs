@@ -13,9 +13,4 @@ public static class MonoUtility
     {
         mono.transform.SetParent(parent);
     }
-
-    public static bool ActiveInHierarchy(this MonoBehaviour mono)
-    {
-        return mono.gameObject.activeInHierarchy;
-    }
 }

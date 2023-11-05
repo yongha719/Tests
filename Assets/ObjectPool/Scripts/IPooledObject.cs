@@ -4,5 +4,7 @@ using UnityEngine;
 
 public interface IPooledObject 
 {
-    void Destroy();
+    public bool CanGet { get; set; }
+
+    void OnDestroyObject();
 }

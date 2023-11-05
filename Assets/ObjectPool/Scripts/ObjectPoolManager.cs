@@ -1,32 +1,48 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Pool;
 
 public class ObjectPoolManager : Singleton<ObjectPoolManager>
 {
-    public PooledObjectData BulletPoolObjectData;
+    public PooledObjectData bulletPoolData;
 
-    private ObjectPool<Bullet> bulletPool;
+    private ObjectPool<Bullet> bulletPool = null;
     public IObjectPool<Bullet> BulletPool
     {
         get
         {
-            if(bulletPool == null)
+            if (bulletPool == null)
             {
-                Transform bulletPoolParent = new GameObject("Bullet Pool").transform;
+                var bulletPoolParent = new GameObject("Bullet Pool====").transform;
                 bulletPoolParent.SetParent(transform);
-                BulletPoolObjectData.Parent = bulletPoolParent;
+                bulletPoolData.poolParent = bulletPoolParent;
 
-                //bulletPool = new ObjectPool<Bullet>(bulletPoolParent, )
+                bulletPool = new ObjectPool<Bullet>(bulletPoolParent, bulletPoolData, CreateBulletPool, OnGetBullet, OnReleaseBulletPool, bulletPoolData.size);
+                bulletPool.InitPool();
             }
 
-            return null;
+            return bulletPool;
         }
     }
 
-    private void Start()
+    private Bullet CreateBulletPool()
     {
-        
+        GameObject bulletObject = Instantiate(bulletPoolData.pooledObjectPrefab, bulletPoolData.poolParent);
+
+        var bullet = bulletObject.GetComponent<Bullet>();
+        bullet.pool = bulletPool;
+
+        bulletObject.SetActive(false);
+
+        return bullet;
+    }
+
+    private void OnGetBullet(Bullet bullet)
+    {
+        bullet.SetActive(true);
+    }
+
+    private void OnReleaseBulletPool(Bullet bullet)
+    {
+        bullet.SetActive(false);
     }
 }
